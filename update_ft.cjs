@@ -1,0 +1,294 @@
+const fs = require('fs');
+
+const content = `---
+import '../../pages/VpsRecommend.css';
+import Layout from '../../layouts/Layout.astro';
+import VpsTable from '../../components/VpsTable.tsx';
+import SideNav from '../../components/SideNav.tsx';
+
+const vpsTableData = [
+  {
+    id: "1",
+    useCase: "第一次做外贸 WordPress 站",
+    advice: "零技术、怕网站崩溃、没人会修",
+    specs: "2G 内存起步",
+    brands: "Cloudways / 托管 VPS",
+    links: [
+      { text: "查看 Cloudways", url: "https://www.cloudways.com/en/pricing.php", solid: true }
+    ]
+  },
+  {
+    id: "2",
+    useCase: "普通 B2B 企业官网",
+    advice: "想稳定放产品页、博客和询盘表单",
+    specs: "1核2G 起步",
+    brands: "Vultr / DigitalOcean / Evoxt",
+    links: [
+      { text: "查看 Vultr", url: "/go/vultr/", solid: true }
+    ]
+  },
+  {
+    id: "3",
+    useCase: "WordPress SEO 内容站",
+    advice: "文章、图片、插件会越来越多",
+    specs: "2核2G 起步",
+    brands: "Vultr / DigitalOcean / Cloudways",
+    links: [
+      { text: "查看 DigitalOcean", url: "https://www.digitalocean.com/pricing/droplets", solid: true }
+    ]
+  },
+  {
+    id: "4",
+    useCase: "WooCommerce 独立站",
+    advice: "商品、订单、支付插件更吃资源",
+    specs: "2核4G 起步",
+    brands: "Cloudways / Kamatera / 高配 Vultr",
+    links: [
+      { text: "查看 Kamatera", url: "https://www.kamatera.com/pricing/", solid: true }
+    ]
+  },
+  {
+    id: "5",
+    useCase: "国内团队频繁维护后台",
+    advice: "登录后台、上传图片、保存页面容易卡",
+    specs: "2G 内存起步",
+    brands: "搬瓦工 / DMIT",
+    links: [
+      { text: "查看搬瓦工", url: "https://bandwagonhost.com/cart.php", solid: true }
+    ]
+  },
+  {
+    id: "6",
+    useCase: "预算测试站",
+    advice: "试错成本越低越好，先把项目跑起来",
+    specs: "1核1G / 1核2G",
+    brands: "RackNerd / Evoxt",
+    links: [
+      { text: "查看 RackNerd", url: "https://www.racknerd.com/specials/", solid: true }
+    ]
+  }
+];
+
+const navItems = [
+  { label: '一、按分类速选', href: '#table' },
+  { label: '二、机房选择', href: '#location' },
+  { label: '三、配置选择', href: '#specs' },
+  { label: '四、购买前检查', href: '#checklist' },
+  { label: '五、最后怎么选', href: '#conclusion' },
+  { label: '常见问题', href: '#faq' }
+];
+---
+<Layout title="2026 外贸建站 VPS 推荐：WordPress独立站和跨境商城怎么选？">
+  <Fragment slot="head">
+    <title>2026 外贸建站 VPS 推荐：WordPress独立站和跨境商城怎么选？</title>
+    <meta name="description" content="外贸建站选 VPS，真正影响结果的是你买得准不准。这篇聚焦外贸建站的实际购买决策：客户在哪里、网站是什么类型、团队有没有运维能力、预算大概多少、后期能否稳定升级。" />
+    <meta property="og:title" content="2026 外贸建站 VPS 推荐：WordPress独立站和跨境商城怎么选？" />
+    <meta property="og:description" content="外贸建站选 VPS，真正影响结果的是你买得准不准。这篇聚焦外贸建站的实际购买决策：客户在哪里、网站是什么类型、团队有没有运维能力、预算大概多少、后期能否稳定升级。" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://yourdomain.com/foreign-trade-vps/" />
+    <link rel="canonical" href="https://yourdomain.com/foreign-trade-vps/" />
+  </Fragment>
+
+  <SideNav items={navItems} client:load />
+
+  <div class="vpsrec-wrap">
+    <section class="vpsrec-hero" id="top">
+      <div class="vpsrec-container vpsrec-hero-grid">
+        <div>
+          <div class="vpsrec-kicker">外贸建站服务器选择</div>
+          <h1>2026 外贸建站 VPS 推荐</h1>
+          <p>外贸建站选 VPS，真正影响结果的是你买得准不准。WordPress独立站和跨境商城怎么选？这篇聚焦外贸建站的实际购买决策。</p>
+        </div>
+      </div>
+    </section>
+    
+    <div class="vpsrec-container mt-12 mb-8 text-gray-700 leading-relaxed text-lg xl:pr-56">
+        <p>有些外贸站客户主要在欧洲，服务器却放在美国西海岸；有些只是普通 B2B 展示站，上来就买高配；也有人做 WooCommerce 商城，还用 1G 内存硬撑，后台一装插件就开始卡。服务器选错以后，影响范围会从技术参数延伸到网站打开速度、后台维护效率、广告转化和询盘稳定性。</p>
+        <p class="mt-4">本篇外贸 VPS 推荐指南聚焦实际购买决策：<strong>客户在哪里、网站是什么类型、团队有没有运维能力、预算大概多少、后期能否稳定升级</strong>。</p>
+        <p class="text-sm mt-4 text-gray-500"><em>提示：以下商家 VPS 的价格会随活动、机房、库存和续费规则变化。文中价格只做购买前的预算锚点，购买前请务必核对当前价格、机房、库存和续费规则。</em></p>
+    </div>
+
+    <section class="vpsrec-section" id="table">
+      <div class="vpsrec-container xl:pr-56">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Overview</span>
+          <h2>一、没时间看长文？先按这 3 类外贸 VPS 选</h2>
+        </div>
+        
+        <div class="vpsrec-compare mb-12">
+          <div class="vpsrec-card">
+            <h3>1. 新手省心首选：Cloudways / 托管 VPS</h3>
+            <p>适合第一次做外贸 WordPress 网站、没有技术人员、主要精力放在产品、询盘、广告和 SEO 上的人。<br/><br/>
+            Cloudways 的价值在于提前处理服务器环境、SSL、备份、安全更新和扩容这些麻烦。新手真正容易卡住的地方，是网站出错以后没人会恢复。入门预算可以按 <strong>$11/月起</strong> 估算，正式 WordPress 外贸站更常见的是 <strong>$28/月左右的 2G 方案</strong>。Cloudways托管云服务器从 $11/月起，2GB Premium 方案价格为 $28/月。</p>
+            <p class="mt-2 text-sm text-gray-600"><strong>预算预期：</strong> $11–28/月起步更常见。<br/>
+            <strong>建议配置：</strong> 正式 WordPress 外贸站优先 2G 内存起步。</p>
+            <div class="mt-4"><a class="vpsrec-linkbtn vpsrec-linkbtn-solid" href="https://www.cloudways.com/en/pricing.php">查看 Cloudways</a> <a class="vpsrec-linkbtn" href="https://www.hostwinds.com/vps">查看 Hostwinds</a></div>
+          </div>
+          
+          <div class="vpsrec-card">
+            <h3>2. 国内后台维护首选：搬瓦工 / DMIT 优化线路</h3>
+            <p>适合国内运营团队频繁登录 WordPress 后台，日常要上传产品、改页面、发文章、处理图片的外贸网站。<br/><br/>
+            搬瓦工、DMIT 这类优化线路 VPS 的核心价值，是提升国内团队维护后台时的稳定性和流畅度。团队每天都要进后台操作，线路体验会直接影响工作效率。搬瓦工 CN2 GIA-E 入门预算可以按 <strong>$49.99/季起</strong> 做预期；DMIT 要先看清 Premium、Eyeball、Tier 1 等网络系列，不同线路和机房的预算差异会很大。</p>
+            <p class="mt-2 text-sm text-gray-600"><strong>预算预期：</strong> 搬瓦工 CN2 GIA-E 可按 $50/季以上看，DMIT 优化线路从几十美元/月到更高都有。<br/>
+            <strong>建议配置：</strong> 国内后台维护频繁，2G 内存起步更舒服。</p>
+            <div class="mt-4"><a class="vpsrec-linkbtn vpsrec-linkbtn-solid" href="https://bandwagonhost.com/cart.php">查看搬瓦工</a> <a class="vpsrec-linkbtn" href="https://www.dmit.io/">查看 DMIT</a></div>
+          </div>
+          
+          <div class="vpsrec-card">
+            <h3>3. 低预算试水首选：RackNerd / Evoxt</h3>
+            <p>适合 SOHO 起步、小型展示站、项目测试、练手 WordPress。<br/><br/>
+            RackNerd、Evoxt 这类低价海外 VPS 的优势：成本低，试错压力小。你可以先搭一个 WordPress，测试产品页、询盘表单、SEO 方向，再根据项目进展升级。RackNerd 活动套餐按 <strong>$21.99/年起</strong> 作为预算锚点，Evoxt 入门 VPS <strong>$5.99/月左右</strong> 做月付试水预算。RackNerd的 1GB、2GB、4GB KVM VPS 分别为 $21.99/年、$35.99/年、$59.99/年。</p>
+            <p class="mt-2 text-sm text-gray-600"><strong>预算预期：</strong> RackNerd 约 $20+/年起，Evoxt 约 $5+/月起。<br/>
+            <strong>建议配置：</strong> 测试站 1G 可以起步，正式站更适合 2G 起。</p>
+            <div class="mt-4"><a class="vpsrec-linkbtn vpsrec-linkbtn-solid" href="https://www.racknerd.com/specials/">查看 RackNerd</a> <a class="vpsrec-linkbtn" href="https://evoxt.com/">查看 Evoxt</a></div>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-bold mb-4">快速选择表</h3>
+        <VpsTable data={vpsTableData} headers={["你的情况", "核心痛点 / 特征", "配置建议", "优先选择"]} client:load />
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="location">
+      <div class="vpsrec-container xl:pr-56">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Location</span>
+          <h2>二、外贸 VPS 机房怎么选？</h2>
+          <p>外贸 VPS 机房的第一原则很简单：<strong>客户在哪里，就优先选离客户更近、访问更稳定的节点。</strong></p>
+          <p class="mt-2">很多新手会先看自己在国内打开快不快。这个指标可以参考，但它主要代表后台维护体验。外贸网站首先服务海外客户。客户在美国，就优先美国 VPS；客户在欧洲，就优先德国、荷兰、英国、法国这类欧洲机房；客户分布很散，可以用美国 VPS 配合 CDN。</p>
+        </div>
+        <div class="vpsrec-grid-3">
+          <div class="vpsrec-card">
+            <h3>1. 先按目标客户选机房</h3>
+            <ul class="mt-2 text-gray-700 space-y-2">
+              <li><strong>美国/加拿大：</strong> 优先美国 VPS</li>
+              <li><strong>欧洲客户：</strong> 德国/荷兰/英国/法国</li>
+              <li><strong>东南亚客户：</strong> 新加坡/日本/香港</li>
+              <li><strong>全球客户分散：</strong> 美国 VPS + CDN</li>
+              <li><strong>国内团队维护：</strong> 优化线路/香港/日本</li>
+              <li><strong>多语言外贸站：</strong> 主市场机房 + CDN</li>
+            </ul>
+          </div>
+          <div class="vpsrec-card">
+            <h3>2. 再看国内后台维护体验</h3>
+            <p>我会把机房选择放在品牌前面。原因：同一个 VPS 商家，不同机房的体验可能完全不同。美国客户访问美国机房，通常比绕到亚洲节点更合理；欧洲客户访问欧洲机房，也比硬上便宜美国套餐更稳。<br/><br/>
+            如果团队在国内，每天都要登录后台、上传图片、编辑 Elementor 页面、发布产品内容，可以把优化线路、香港、日本节点纳入候选。这个时候，后台流畅度本身也是生产力。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>3. 测速重点看目标市场</h3>
+            <p>测速时优先看目标客户地区，国内测速工具作为后台维护体验参考。真正该看的，是美国、欧洲、东南亚这些目标市场的 TTFB、PageSpeed Insights、GTmetrix 和实际打开速度。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section" id="specs">
+      <div class="vpsrec-container xl:pr-56">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Specs</span>
+          <h2>三、不同外贸网站，VPS 配置怎么选？</h2>
+          <p>配置别只看“能不能跑起来”，要看半年后还能不能稳。<br/><br/>
+          小型展示站刚上线，页面少、图片少、插件少，1核1G 可以起步。但外贸 WordPress 网站很少永远停留在轻量状态。后期你会加产品页、案例页、询盘表单、SEO 插件、多语言插件、缓存插件、图片压缩插件，甚至还会用 Elementor 这类页面构建器。<br/><br/>
+          插件一多，1G 内存很快就紧。</p>
+        </div>
+        
+        <div class="vpsrec-compare">
+          <div class="vpsrec-card">
+            <h3>1. 先按网站类型选配置</h3>
+            <ul class="mt-2 text-gray-700 space-y-2">
+              <li><strong>小型展示站：</strong> 1核1G / 1核2G (适合测试和轻量展示，插件要克制)</li>
+              <li><strong>普通 B2B 外贸官网：</strong> 1核2G / 25GB+ NVMe (正式公司站更稳的起点)</li>
+              <li><strong>WordPress SEO 内容站：</strong> 2核2G / 40GB+ NVMe (文章、图片、插件增加后更稳)</li>
+              <li><strong>WooCommerce 独立站：</strong> 2核4G 起步 (商品、购物车、支付、订单都吃资源)</li>
+              <li><strong>多语言外贸站：</strong> 2核4G 以上 (多语言插件和数据库压力更明显)</li>
+              <li><strong>广告投放落地页：</strong> 2核2G / 2核4G (流量波动时更稳)</li>
+            </ul>
+          </div>
+          <div class="vpsrec-card">
+            <h3>2. 普通外贸官网：1核2G 更稳</h3>
+            <p>普通 B2B 外贸官网，我更愿意从 1核2G 看起。这个配置不会太浪费，也能给 WordPress 留出一点余量。后面增加产品页、博客文章、询盘表单和 SEO 插件时，网站会跑到更稳。</p>
+            <h3 class="mt-6">3. 内容站和多语言站：2核2G 起步更舒服</h3>
+            <p>做 SEO 内容站，建议直接看 2核2G。文章、图片、缓存、数据库查询都会慢慢堆起来。多语言站还会增加翻译插件、语言切换、缓存规则和数据库压力，预算允许时直接看 2核4G 会更省心。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>4. WooCommerce 商城：从 2核4G 开始规划</h3>
+            <p>WooCommerce 和展示站是两种压力模型。展示站主要是页面访问，WooCommerce 还要处理商品、购物车、订单、支付、邮件通知、库存和后台管理。用了 Stripe、PayPal、物流插件、邮件营销插件以后，后台请求会明显变多，缓存也覆盖不了所有动态页面。<br/><br/>正式商城从 2核4G 起步，能少走很多弯路。</p>
+            <h3 class="mt-6">5. 硬盘、备份和升级也要一起看</h3>
+            <p>正式外贸站优先 NVMe SSD，容量够用只是一方面，IO 和稳定性更影响 WordPress 后台体验。再往后看，就是快照、自动备份和能不能平滑升级。配置买得合理，是给网站增长留空间。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="vpsrec-section vpsrec-section-light" id="checklist">
+      <div class="vpsrec-container xl:pr-56">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Checklist</span>
+          <h2>四、买外贸 VPS 前，先检查这 5 件事</h2>
+          <p>买之前把这 5 件事过一遍，能少踩很多坑。</p>
+        </div>
+        <div class="vpsrec-grid-3">
+          <div class="vpsrec-card">
+            <h3>1. 机房跟客户市场对上</h3>
+            <p>客户在美国，优先美国；客户在欧洲，优先欧洲。国内打开舒服是维护体验，客户访问稳定才是外贸站的主目标。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>2. 配置给 WordPress 留余量</h3>
+            <p>外贸站上线当天通常很轻，半年后才开始吃资源。产品页多了，博客文章多了，表单、多语言、缓存、图片压缩插件都装上去，服务器压力会一层层叠起来。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>3. 备份方案先开好</h3>
+            <p>插件更新失败、主题冲突、误删页面、服务器故障，都可能让网站突然打不开。产品页、询盘表单、订单数据丢一次，恢复成本远比服务器月租高。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>4. 确认后期能升配</h3>
+            <p>测试期可以低配，正式运营后要能升级。购买前重点看 CPU、内存、硬盘能不能升级，升级是否需要迁移，IP 是否会变化，快照能不能保留。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>5. 用目标市场测速</h3>
+            <p>外贸站速度更该看 Google PageSpeed Insights、GTmetrix、WebPageTest，再结合目标客户地区访问速度和 WordPress 后台实际操作体验判断。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="vpsrec-section" id="conclusion">
+      <div class="vpsrec-container xl:pr-56 text-center max-w-5xl mx-auto">
+        <div class="vpsrec-section-title text-center">
+          <h2>五、外贸建站 VPS 最后怎么选？</h2>
+        </div>
+        <p class="text-lg text-gray-700 leading-relaxed text-left">
+          只是测试外贸站，RackNerd、Evoxt 这类低价 VPS 可以用；正式做 B2B 官网，1核2G 是更稳的起点；做 WordPress SEO 内容站，建议 2核2G；做 WooCommerce 独立站，直接从 2核4G 看起。<br/><br/>
+          新手优先 Cloudways 这类托管 VPS；有经验的人，再选 Vultr、DigitalOcean 这类普通海外 VPS 控制长期成本；国内团队频繁维护后台，再考虑搬瓦工、DMIT 这类优化线路。<br/><br/>
+          <strong>正式外贸站，服务器要先保证三件事：客户能稳定打开，后台能顺畅维护，出问题后能恢复。满足这三点，再去比较价格。测试站可以省，正式外贸站要把稳定放在价格前面。</strong>
+        </p>
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="faq">
+      <div class="vpsrec-container xl:pr-56">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">FAQ</span>
+          <h2>常见问题</h2>
+        </div>
+        <div class="vpsrec-faq">
+          <details open>
+            <summary>VPS 和虚拟主机，外贸建站选哪个？</summary>
+            <p>小型展示站可以用虚拟主机起步，正式做 WordPress 外贸站，更建议选 VPS。资源更独立，后期扩展空间也更大。</p>
+          </details>
+          <details>
+            <summary>完全零基础能用 VPS 吗？</summary>
+            <p>可以，优先选托管 VPS。普通 VPS 要自己处理环境、SSL、备份和安全，新手直接上裸 VPS 会花很多时间。</p>
+          </details>
+          <details>
+            <summary>外贸站测速看国内速度还是海外速度？</summary>
+            <p>优先看目标客户地区速度。国内速度主要影响后台维护体验，海外速度才更接近真实客户访问体验。美国客户看美国节点，欧洲客户看欧洲节点，全球客户再配合 CDN 判断。</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+`
+
+fs.writeFileSync('src/pages/foreign-trade-vps/index.astro', content);
