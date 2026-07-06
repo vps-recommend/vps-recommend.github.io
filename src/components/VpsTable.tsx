@@ -60,6 +60,8 @@ export default function VpsTable({ data, headers }: VpsTableProps) {
                       key={idx}
                       className={`vpsrec-linkbtn ${link.solid ? 'vpsrec-linkbtn-solid' : ''}`}
                       href={link.url}
+                      target={link.url.startsWith('https://zhujitanzhang.com/go/') ? '_blank' : undefined}
+                      rel={link.url.startsWith('https://zhujitanzhang.com/go/') ? 'nofollow noopener noreferrer' : undefined}
                     >
                       {link.text}
                     </a>
