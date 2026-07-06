@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const domain = 'https://zhujitanzhang.com';
+const domain = 'https://vps-recommend.github.io';
 
 function fixSEO(filePath) {
   let content = fs.readFileSync(filePath, 'utf-8');

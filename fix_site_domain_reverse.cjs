@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const newDomain = 'https://zhujitanzhang.com';
+const newDomain = 'https://vps-recommend.github.io';
 const oldDomainRegex = /https:\/\/yourdomain\.com/g;
 
 function replaceDomain(filePath) {

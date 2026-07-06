@@ -5,7 +5,7 @@ function processFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf-8');
   let originalContent = content;
 
-  content = content.split("https://zhujitanzhang.comhttps://zhujitanzhang.com/").join("https://zhujitanzhang.com/");
+  content = content.split("https://vps-recommend.github.iohttps://vps-recommend.github.io/").join("https://vps-recommend.github.io/");
 
   if (content !== originalContent) {
     fs.writeFileSync(filePath, content);

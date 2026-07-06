@@ -2,22 +2,22 @@ const fs = require('fs');
 const path = require('path');
 
 const links = {
-  "CloudCone": "https://zhujitanzhang.com/go/cloudcone/",
-  "RackNerd": "https://zhujitanzhang.com/go/racknerd/",
-  "Bandwagonhost": "https://zhujitanzhang.com/go/bandwagonhost/",
-  "搬瓦工": "https://zhujitanzhang.com/go/bandwagonhost/",
-  "Vultr": "https://zhujitanzhang.com/go/vultr/",
-  "HostDare": "https://zhujitanzhang.com/go/hostdare/",
-  "Linode": "https://zhujitanzhang.com/go/linode/",
-  "DigitalOcean": "https://zhujitanzhang.com/go/digitalocean/",
-  "Cloudways": "https://zhujitanzhang.com/go/cloudways/",
-  "DMIT": "https://zhujitanzhang.com/go/dmit/",
-  "阿里云": "https://zhujitanzhang.com/go/aliyun/",
-  "Evoxt": "https://zhujitanzhang.com/go/evoxt/",
-  "Hostwinds": "https://zhujitanzhang.com/go/hostwinds/",
-  "Kamatera": "https://zhujitanzhang.com/go/kamatera/",
-  "Lisahost": "https://zhujitanzhang.com/go/lisahost/",
-  "丽莎主机": "https://zhujitanzhang.com/go/lisahost/"
+  "CloudCone": "https://vps-recommend.github.io/go/cloudcone/",
+  "RackNerd": "https://vps-recommend.github.io/go/racknerd/",
+  "Bandwagonhost": "https://vps-recommend.github.io/go/bandwagonhost/",
+  "搬瓦工": "https://vps-recommend.github.io/go/bandwagonhost/",
+  "Vultr": "https://vps-recommend.github.io/go/vultr/",
+  "HostDare": "https://vps-recommend.github.io/go/hostdare/",
+  "Linode": "https://vps-recommend.github.io/go/linode/",
+  "DigitalOcean": "https://vps-recommend.github.io/go/digitalocean/",
+  "Cloudways": "https://vps-recommend.github.io/go/cloudways/",
+  "DMIT": "https://vps-recommend.github.io/go/dmit/",
+  "阿里云": "https://vps-recommend.github.io/go/aliyun/",
+  "Evoxt": "https://vps-recommend.github.io/go/evoxt/",
+  "Hostwinds": "https://vps-recommend.github.io/go/hostwinds/",
+  "Kamatera": "https://vps-recommend.github.io/go/kamatera/",
+  "Lisahost": "https://vps-recommend.github.io/go/lisahost/",
+  "丽莎主机": "https://vps-recommend.github.io/go/lisahost/"
 };
 
 function processFile(filePath) {
