@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://zhujitanzhang.com',
+  site: 'https://joag99.github.io',
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
