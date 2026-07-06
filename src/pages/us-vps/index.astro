@@ -1,0 +1,315 @@
+---
+import '../../pages/VpsRecommend.css';
+import Layout from '../../layouts/Layout.astro';
+import VpsTable from '../../components/VpsTable.tsx';
+import SideNav from '../../components/SideNav.tsx';
+
+const sceneData = [
+  {
+    id: '1',
+    useCase: '外贸站 / 英文站',
+    advice: 'Vultr / CloudCone',
+    specs: '海外访问够用，后台成熟',
+    brands: '适合普通建站',
+    links: [
+      { text: '查看 Vultr', url: 'https://zhujitanzhang.com/go/vultr/', solid: true },
+      { text: '查看 CloudCone', url: 'https://zhujitanzhang.com/go/cloudcone/' }
+    ]
+  },
+  {
+    id: '2',
+    useCase: '国内访问（中文站）',
+    advice: '搬瓦工 / VMiss / V.PS 等',
+    specs: '线路比配置更重要',
+    brands: '重点看 CN2 GIA、AS9929、CMIN2',
+    links: [{ text: '查看搬瓦工', url: 'https://zhujitanzhang.com/go/bandwagonhost/', solid: true }]
+  },
+  {
+    id: '3',
+    useCase: '便宜测试',
+    advice: 'RackNerd / CloudCone 活动款',
+    specs: '价格低',
+    brands: '适合学习和试错',
+    links: [
+      { text: '查看 RackNerd', url: 'https://zhujitanzhang.com/go/racknerd/', solid: true },
+      { text: '查看 CloudCone', url: 'https://zhujitanzhang.com/go/cloudcone/' }
+    ]
+  },
+  {
+    id: '4',
+    useCase: 'WordPress 小站',
+    advice: 'Vultr / CloudCone',
+    specs: '月付测试方便',
+    brands: '后期升级也方便',
+    links: [{ text: '查看 Vultr', url: 'https://zhujitanzhang.com/go/vultr/', solid: true }]
+  },
+  {
+    id: '5',
+    useCase: '正式中文站 / 业务站',
+    advice: '搬瓦工 / 美国优化线路 VPS',
+    specs: '晚高峰、备份、工单优先',
+    brands: '稳定性比低价更重要',
+    links: [{ text: '查看搬瓦工', url: 'https://zhujitanzhang.com/go/bandwagonhost/', solid: true }]
+  },
+  {
+    id: '6',
+    useCase: '原生 IP / 解锁需求',
+    advice: '原生 IP VPS / 干净 IP VPS',
+    specs: '检查 IP 归属、ASN、风险分',
+    brands: '以实际可用性为准',
+    links: []
+  }
+];
+
+const navItems = [
+  { label: '一、先看结论', href: '#overview' },
+  { label: '二、线路与配置', href: '#network' },
+  { label: '三、推荐清单', href: '#recommendations' },
+  { label: '四、便宜 VPS 怎么买', href: '#cheap' },
+  { label: '五、购买前检查', href: '#checklist' },
+  { label: '六、常见问题', href: '#faq' }
+];
+
+const productAttrs = {
+  target: '_blank',
+  rel: 'nofollow noopener noreferrer'
+};
+---
+
+<Layout title="美国 VPS 推荐：建站、外贸、国内访问和便宜年付怎么选？">
+  <Fragment slot="head">
+    <title>美国 VPS 推荐：建站、外贸、国内访问和便宜年付怎么选？</title>
+    <meta name="description" content="美国 VPS 推荐与选购指南：按外贸建站、中文站大陆访问、低价测试、WordPress 和原生 IP 场景，对比 Vultr、CloudCone、RackNerd、搬瓦工及美国优化线路 VPS。" />
+    <meta property="og:title" content="美国 VPS 推荐：建站、外贸、国内访问和便宜年付怎么选？" />
+    <meta property="og:description" content="按用途选择美国 VPS：海外建站看普通云服务器，中文站重点看 CN2 GIA、AS9929、CMIN2，低价年付适合测试和备用。" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vps-recommend.github.io/us-vps/" />
+    <link rel="canonical" href="https://vps-recommend.github.io/us-vps/" />
+    <script type="application/ld+json" is:inline>
+      {JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://vps-recommend.github.io/us-vps/' },
+        headline: '美国 VPS 推荐：建站、外贸、国内访问和便宜年付怎么选？',
+        description: '按用途、线路、配置和预算选择美国 VPS。',
+        author: { '@type': 'Organization', name: 'VPS推荐' },
+        publisher: {
+          '@type': 'Organization',
+          name: 'VPS推荐',
+          logo: { '@type': 'ImageObject', url: 'https://vps-recommend.github.io/logo.png' }
+        },
+        datePublished: '2026-07-06T08:00:00+08:00',
+        dateModified: '2026-07-06T08:00:00+08:00'
+      })}
+    </script>
+  </Fragment>
+
+  <div class="vpsrec-wrap">
+    <section class="vpsrec-hero" id="top">
+      <div class="vpsrec-container vpsrec-hero-grid">
+        <div>
+          <div class="vpsrec-kicker">美国机房与线路选购指南</div>
+          <h1>美国 VPS 推荐</h1>
+          <p class="text-xl font-semibold mt-3">建站、外贸、国内访问和便宜年付怎么选？</p>
+          <p class="mt-5">选美国 VPS，先看用途。外贸站、英文站、开发测试，<strong>Vultr、CloudCone</strong> 这类普通美国云服务器就够用；主要访客在中国大陆，线路比 CPU 和内存更重要，优先看<strong>搬瓦工、VMiss、V.PS、LightLayer</strong> 这类带 CN2 GIA、AS9929、CMIN2 的美国优化线路 VPS。</p>
+          <p class="mt-4">便宜美国 VPS 值得买，更适合学习、测试、备用机和低流量项目。正式网站，尤其是已经有收录、有流量、有询盘的网站，建议<strong>先月付或季付测试</strong>，确认速度、稳定性、备份和续费以后，再考虑长期使用。需要美国原生 IP、AI 工具访问、跨境账号环境或流媒体识别的用户，还要单独检查 IP 属性，不能只看机房写着“美国”。</p>
+        </div>
+      </div>
+    </section>
+
+    <SideNav items={navItems} client:load />
+
+    <section class="vpsrec-section" id="overview">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Overview</span>
+          <h2>一、美国 VPS 推荐先看结论：低价、建站、国内访问分别选谁？</h2>
+          <p>新手选美国 VPS，先按用途分，再看价格。外贸站看海外访问稳定性，中文站看大陆线路，学习测试看成本，WordPress 小站看内存和备份。</p>
+        </div>
+
+        <h3 class="text-xl font-bold mb-4">1. 核心需求场景对标表</h3>
+        <VpsTable data={sceneData} headers={['你的情况', '默认建议', '选择重点', '选择原因']} client:load />
+
+        <div class="vpsrec-callout mt-8"><strong>💡 新手选购顺序提示：</strong>完全新手可以按这个顺序看：外贸站先看 Vultr ➡️ 低价测试先看 RackNerd ➡️ 国内访问先看搬瓦工 ➡️ WordPress 小站先月付测试 Vultr/CloudCone ➡️ 正式中文站优先美国优化线路 VPS。</div>
+
+        <h3 class="text-xl font-bold mt-10 mb-4">2. 预算规划选购表</h3>
+        <div class="vpsrec-table-wrap">
+          <table class="vpsrec-table w-full">
+            <thead><tr><th>预算区间</th><th>适合选择</th><th>适合用途</th><th>购买建议</th></tr></thead>
+            <tbody>
+              <tr><td><strong>$10–30/年</strong></td><td>RackNerd / CloudCone 活动款</td><td>学习、测试、备用机</td><td>接受低价 VPS 的使用边界</td></tr>
+              <tr><td><strong>$5–10/月</strong></td><td>Vultr / CloudCone</td><td>外贸站、英文站、普通建站</td><td>先月付测试</td></tr>
+              <tr><td><strong>$50–100/年</strong></td><td>入门优化线路 VPS</td><td>中文小站、国内访问测试</td><td>重点看线路和流量</td></tr>
+              <tr><td><strong>$100+/年</strong></td><td>搬瓦工 / V.PS / VMiss 等</td><td>长期中文站、业务项目</td><td>重点看稳定性、晚高峰和备份</td></tr>
+              <tr><td><strong>更高预算</strong></td><td>原生 IP / 独立 IP / 高质量线路</td><td>跨境业务、AI 工具、账号环境</td><td>先确认 IP 属性和业务可用性</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="vpsrec-grid-3 mt-10">
+          <div class="vpsrec-card"><h3>外贸站优先看海外用户体验</h3><p>客户主要在美国、欧洲、澳洲，普通美国 VPS 往往更合适，CN2 GIA 的价值主要体现在中国大陆访问上。</p></div>
+          <div class="vpsrec-card"><h3>中文站优先看线路</h3><p>普通美国 VPS 年付很便宜，但如果晚上打开慢、后台响应迟缓、客户等待长，低价优势很快会被抵消。</p></div>
+          <div class="vpsrec-card"><h3>特殊需求优先看 IP 属性</h3><p>有账号环境、AI 工具、流媒体识别需求的用户，美国机房 IP 和美国原生 IP 是两回事，优先看 IP 干净程度和实际可用性。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="network">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Network</span>
+          <h2>二、买美国 VPS 先看线路，再看配置</h2>
+          <p>很多新手买美国 VPS，第一眼看 CPU、内存、硬盘。如果访客主要在海外，配置、带宽当然重要；但<strong>如果访客主要在中国大陆，线路往往比配置更影响体验。</strong></p>
+          <p>一台普通线路的 <code>4核 8G</code> VPS，晚高峰打开慢，用户体感可能还不如一台 <code>1核 2G</code> 的优化线路 VPS。国内访问真正影响体验的是晚上加载速度、丢包、抖动和后台响应。</p>
+        </div>
+
+        <div class="vpsrec-card">
+          <h3>1. 线路：大陆访问优先看 CN2 GIA、AS9929、CMIN2</h3>
+          <ul class="mt-4">
+            <li><strong>CN2 GIA：</strong>电信方向更值得看，适合中文站、大陆访问项目。</li>
+            <li><strong>AS9929 / CUII：</strong>联通方向值得关注。</li>
+            <li><strong>CMIN2 / CMI：</strong>移动方向可以重点看。</li>
+            <li><strong>AS4837：</strong>预算和体验之间的折中选择。</li>
+            <li><strong>普通国际线路：</strong>适合外贸站、英文站、海外访客。</li>
+          </ul>
+          <div class="vpsrec-callout mt-6">
+            <strong>🚗 一句话看懂线路区别：</strong>
+            <ul class="mt-2">
+              <li><strong>普通国际线路：</strong>像普通国道，价格便宜，适合海外访客，晚高峰易拥堵。</li>
+              <li><strong>AS4837：</strong>像高性价比的快速路，介于普通线路与高端优化线路之间。</li>
+              <li><strong>CN2 GIA / AS9929 / CMIN2：</strong>像顺畅的高速公路，专线专跑，重点解决大陆晚高峰丢包和回程拥堵问题。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="vpsrec-grid-3 mt-8">
+          <div class="vpsrec-card"><h3>2. 延迟与机房：按访客位置选城市</h3><p>美国西海岸（如洛杉矶、圣何塞、西雅图）对大陆访问物理距离相对友好，但也需接受基础的物理延迟。重点看晚高峰、丢包和回程稳定性。外贸站则要看客户在哪里，客户在美国东部，就可以考虑纽约或周边机房。</p></div>
+          <div class="vpsrec-card"><h3>3. 配置：新手从 1核1G 或 1核2G 开始</h3><p>学习测试从 1核1G 起步；WordPress 小站建议 <strong>1核2G</strong>，避免后期装插件、跑缓存时内存紧张。</p></div>
+        </div>
+
+        <div class="vpsrec-table-wrap mt-8">
+          <table class="vpsrec-table w-full">
+            <thead><tr><th>配置推荐</th><th>适合用途</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1核 1G</strong></td><td>Linux 学习、脚本测试、轻量服务</td></tr>
+              <tr><td><strong>1核 2G</strong></td><td>WordPress 小站、工具站、轻量博客</td></tr>
+              <tr><td><strong>2核 2G</strong></td><td>长期网站、小型商业项目、多插件 WordPress</td></tr>
+              <tr><td><strong>2核 4G 以上</strong></td><td>多站点、图片多、访问量逐渐增长的网站</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm mt-4 text-gray-500">注：WordPress 小站建议 <code>1核 2G</code> 起步。1GB 内存后期装插件、跑缓存容易紧张。</p>
+      </div>
+    </section>
+
+    <section class="vpsrec-section" id="recommendations">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Recommendations</span>
+          <h2>三、美国 VPS 推荐清单：按真实用途对号入座</h2>
+        </div>
+        <div class="vpsrec-compare">
+          <article class="vpsrec-card">
+            <h3>1. 国内访问优化：搬瓦工 / VMiss / V.PS / LightLayer</h3>
+            <ul class="mt-4">
+              <li><strong>适合谁：</strong>中文网站、面向大陆用户的项目、对晚高峰速度敏感的项目。</li>
+              <li><strong>重点看：</strong>线路名称是否清楚、是否有测试 IP、晚高峰三网表现、月流量是否够用。</li>
+              <li><strong>选购建议：</strong>主要访客在大陆优先看优化线路。搬瓦工适合追求极致稳定和核心机房体验、长期持有少折腾的用户；VMiss、V.PS、LightLayer 适合预算适中且明确需要 CN2 GIA 或 AS9929 的用户。</li>
+              <li><strong>🎯 快速选择：</strong>预算充足、追求长期稳定，优先看搬瓦工；想先小额测试优化线路，看 VMiss / V.PS 的短周期套餐。</li>
+            </ul>
+            <div class="vpsrec-table-actions mt-6"><a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/bandwagonhost/" {...productAttrs}>查看搬瓦工优化线路套餐</a></div>
+          </article>
+
+          <article class="vpsrec-card">
+            <h3>2. 外贸建站 / 英文站：Vultr / CloudCone</h3>
+            <ul class="mt-4">
+              <li><strong>适合谁：</strong>外贸独立站、英文内容站、面向欧美用户的网站、开发测试。</li>
+              <li><strong>重点看：</strong>目标客户所在地区、后台管理体验、快照备份便利度。</li>
+              <li><strong>选购建议：</strong>客户在欧美，Vultr 或 CloudCone 足够用。外贸站尽量让机器靠近目标用户；后台要好用，快照要方便，后期升级也要顺手。网站跑起来后，迁移成本远比几美元月费高。</li>
+              <li><strong>🎯 快速选择：</strong>需要按小时计费、随时开机器、方便升级，选 Vultr；想要洛杉矶机房和轻量建站成本，选 CloudCone。</li>
+            </ul>
+            <div class="vpsrec-table-actions mt-6">
+              <a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/vultr/" {...productAttrs}>查看 Vultr 美国机房套餐</a>
+              <a class="vpsrec-btn vpsrec-btn-ghost" href="https://zhujitanzhang.com/go/cloudcone/" {...productAttrs}>查看 CloudCone</a>
+            </div>
+          </article>
+
+          <article class="vpsrec-card">
+            <h3>3. 低价学习 / 测试：RackNerd / CloudCone 活动款</h3>
+            <ul class="mt-4">
+              <li><strong>适合谁：</strong>新手学习 Linux、测试脚本、临时环境、做备用节点、低流量小站。</li>
+              <li><strong>重点看：</strong>年付价格、续费价格、机房位置、CPU 使用限制、退款政策。</li>
+              <li><strong>选购建议：</strong>新手拿来练手、折腾系统非常划算。买之前重点看<strong>续费价格</strong>和<strong>备份方式</strong>，长期使用要算清迁移成本。适合试错，重要业务站点请绕道。</li>
+              <li><strong>🎯 快速选择：</strong>新手练手、低成本测试，先看 RackNerd 年付活动款。</li>
+            </ul>
+            <div class="vpsrec-table-actions mt-6"><a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/racknerd/" {...productAttrs}>查看 RackNerd 低价年付 VPS</a></div>
+          </article>
+
+          <article class="vpsrec-card">
+            <h3>4. WordPress 小站：Vultr / CloudCone / 搬瓦工</h3>
+            <ul class="mt-4">
+              <li><strong>适合谁：</strong>小型博客、企业展示站、内容站、个人项目站。</li>
+              <li><strong>重点看：</strong>访客主要来源、内存是否够用、快照备份功能。</li>
+              <li><strong>选购建议：</strong>访客在海外看 Vultr/CloudCone；访客在大陆优先看搬瓦工或优化线路。长期做站，稳定比极限低价更重要，故障后能否快速恢复是核心考量。</li>
+              <li><strong>🎯 快速选择：</strong>海外访客为主选 Vultr；大陆访客为主看搬瓦工。</li>
+            </ul>
+            <div class="vpsrec-table-actions mt-6">
+              <a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/vultr/" {...productAttrs}>查看 Vultr</a>
+              <a class="vpsrec-btn vpsrec-btn-ghost" href="https://zhujitanzhang.com/go/bandwagonhost/" {...productAttrs}>查看搬瓦工</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="cheap">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Low Cost</span>
+          <h2>四、便宜美国 VPS 怎么买更稳？（建站与测试分开看）</h2>
+          <p>便宜美国 VPS 值得买，但新手一定要把<strong>“测试项目”</strong>和<strong>“正式业务”</strong>分清楚。</p>
+        </div>
+        <div class="vpsrec-compare">
+          <div class="vpsrec-card"><h3>低价年付 VPS 适合</h3><p>学习 Linux、测试脚本、临时项目、备用节点。花很少的钱熟悉面板、重装、解析，试错价值极高。</p></div>
+          <div class="vpsrec-card"><h3>正式建站更应该看</h3><p>当站点有收录和询盘时，继续贪图便宜几美元就容易把风险藏起来。优先看<strong>商家稳定性、续费价格、异地备份能力、工单响应、线路稳定性</strong>。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section" id="checklist">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Checklist</span>
+          <h2>五、买美国 VPS 前重点检查这 7 件事</h2>
+        </div>
+        <div class="vpsrec-grid-3">
+          <div class="vpsrec-card"><h3>1. 首年价格 vs 续费价格</h3><p>年付之前看清是首年优惠还是循环折扣。</p></div>
+          <div class="vpsrec-card"><h3>2. 配置与线路匹配度</h3><p>看到 <code>4核 8G</code>、<code>10Gbps</code> 等夸张参数时，回头看一眼线路和实际访问方向。</p></div>
+          <div class="vpsrec-card"><h3>3. 机房所在城市</h3><p>中文站优先看西海岸（洛杉矶、圣何塞等）；外贸站按客户区域就近选择。</p></div>
+          <div class="vpsrec-card"><h3>4. WordPress 内存余量</h3><p>尽量 <code>1核 2G</code> 起步应对插件和缓存更新。</p></div>
+          <div class="vpsrec-card"><h3>5. TOS（服务条款）限制</h3><p>低价 VPS 对 CPU 滥用极其敏感，跑爬虫和持续高占用前先看限制。</p></div>
+          <div class="vpsrec-card"><h3>6. 备份和恢复方式</h3><p><strong>自己的异地备份才是最后保障。</strong>机器买错了可以换，数据丢了成本远超服务器月费。</p></div>
+          <div class="vpsrec-card"><h3>7. 是否需要原生 IP / 干净 IP</h3><p>针对跨境账号、AI 工具、流媒体，普通机房 IP 容易触发风控。下单前利用 IPinfo、Scamalytics 等工具查看 ASN 属性和欺诈风险分。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="faq">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">FAQ</span>
+          <h2>六、美国 VPS 常见问题</h2>
+        </div>
+        <div class="vpsrec-faq">
+          <details open><summary>Q1：美国 VPS 适合搭建中文网站吗？</summary><p>适合，但<strong>必须选对线路</strong>。大陆访客多，优先看 CN2 GIA、AS9929、CMIN2 这类优化线路；海外访客多，普通美国 VPS 就够用。</p></details>
+          <details><summary>Q2：美国 VPS 推荐哪个机房？</summary><p>中文站优先看洛杉矶、圣何塞、西雅图（西海岸直连较快）。外贸站按客户所在区域选。</p></details>
+          <details><summary>Q3：便宜美国 VPS 可以长期用吗？</summary><p>可以，但仅限轻量项目。正式商业网站长期使用前，务必考察商家的灾备能力和工单响应速度。</p></details>
+          <details><summary>Q4：美国 VPS 国内访问慢怎么办？</summary><p>先查线路（回程是否拥堵），再看配置。盲目升级 CPU 和内存通常解决不了晚高峰拥堵的核心问题。</p></details>
+          <details><summary>Q5：新手买多大配置？</summary><p>学习测试 <code>1核 1G</code> 起步；普通 WordPress 小站建议 <code>1核 2G</code>；图片、插件较多的正式站点，直接看 <code>2核 2G</code> 以上。</p></details>
+          <details><summary>Q6：买到美国 VPS 后，发现 IP 连不上怎么办？</summary><p>先确认是没开机、端口未放行，还是 IP 被墙。用 Ping 工具排查。若刚买就被墙，主流商家大多支持一定时间内免费换 IP 或退款重建；长期使用被墙则可能需要付费更换干净 IP。</p></details>
+          <details><summary>Q7：美国 VPS 原生 IP 重要吗？</summary><p>建站用户优先看线路稳定性。<strong>原生 IP 主要服务于跨境电商账号、AI 工具及流媒体解锁</strong>，这类需求下单前必须做 IP 纯净度背调。</p></details>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
