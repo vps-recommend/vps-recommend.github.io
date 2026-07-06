@@ -7,6 +7,18 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const isActivePath = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+
+const navLinkClass = (href: string) =>
+  [
+    'relative rounded-md px-3 py-2 font-medium transition-colors',
+    isActivePath(href)
+      ? 'bg-blue-50 text-blue-700 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600'
+      : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
+  ].join(' ');
 ---
 
 <!doctype html>
@@ -27,12 +39,12 @@ const { title } = Astro.props;
             <a href="/" class="text-xl font-bold text-blue-600">
               VPS推荐
             </a>
-            <nav class="hidden md:flex gap-6">
-              <a href="/" class="text-gray-600 hover:text-blue-600 font-medium">首页</a>
-              <a href="/cheap-vps/" class="text-gray-600 hover:text-blue-600 font-medium">便宜 VPS</a>
-              <a href="/foreign-trade-vps/" class="text-gray-600 hover:text-blue-600 font-medium">外贸 VPS</a>
-              <a href="/vps-for-proxy/" class="text-gray-600 hover:text-blue-600 font-medium">搭梯子 VPS</a>
-              <a href="/us-vps/" class="text-gray-600 hover:text-blue-600 font-medium">美国 VPS</a>
+            <nav class="hidden md:flex items-center gap-2" aria-label="主导航">
+              <a href="/" class={navLinkClass('/')} aria-current={isActivePath('/') ? 'page' : undefined}>首页</a>
+              <a href="/cheap-vps/" class={navLinkClass('/cheap-vps/')} aria-current={isActivePath('/cheap-vps/') ? 'page' : undefined}>便宜 VPS</a>
+              <a href="/foreign-trade-vps/" class={navLinkClass('/foreign-trade-vps/')} aria-current={isActivePath('/foreign-trade-vps/') ? 'page' : undefined}>外贸 VPS</a>
+              <a href="/vps-for-proxy/" class={navLinkClass('/vps-for-proxy/')} aria-current={isActivePath('/vps-for-proxy/') ? 'page' : undefined}>搭梯子 VPS</a>
+              <a href="/us-vps/" class={navLinkClass('/us-vps/')} aria-current={isActivePath('/us-vps/') ? 'page' : undefined}>美国 VPS</a>
             </nav>
           </div>
         </div>
