@@ -1,0 +1,8 @@
+{
+  "name": "Remix: VPS推荐",
+  "description": "VPS选购决策指南及推荐列表",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

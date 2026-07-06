@@ -1,0 +1,16 @@
+export const affiliateLinks = {
+  cloudcone: "https://zhujitanzhang.com/go/cloudcone/",
+  racknerd: "https://zhujitanzhang.com/go/racknerd/",
+  bandwagonhost: "https://zhujitanzhang.com/go/bandwagonhost/",
+  vultr: "https://zhujitanzhang.com/go/vultr/",
+  hostdare: "https://zhujitanzhang.com/go/hostdare/",
+  linode: "https://zhujitanzhang.com/go/linode/",
+  digitalocean: "https://zhujitanzhang.com/go/digitalocean/",
+  cloudways: "https://zhujitanzhang.com/go/cloudways/",
+  dmit: "https://zhujitanzhang.com/go/dmit/",
+  aliyun: "https://zhujitanzhang.com/go/aliyun/",
+  evoxt: "https://zhujitanzhang.com/go/evoxt/",
+  hostwinds: "https://zhujitanzhang.com/go/hostwinds/",
+  kamatera: "https://zhujitanzhang.com/go/kamatera/",
+  lisahost: "https://zhujitanzhang.com/go/lisahost/",
+};
