@@ -1,0 +1,314 @@
+---
+import '../../pages/VpsRecommend.css';
+import Layout from '../../layouts/Layout.astro';
+import VpsTable from '../../components/VpsTable.tsx';
+import SideNav from '../../components/SideNav.tsx';
+
+const vpsTableData = [
+  {
+    id: '1',
+    useCase: '第一次自己搭梯子',
+    advice: 'Vultr',
+    specs: 'Alipay / PayPal / 信用卡 / UnionPay',
+    brands: '适合按小时计费试错，买错机房可以销毁重建',
+    links: [{ text: '查看 Vultr', url: 'https://zhujitanzhang.com/go/vultr/', solid: true }]
+  },
+  {
+    id: '2',
+    useCase: '想长期稳定使用',
+    advice: '搬瓦工 CN2 GIA-E',
+    specs: '支付宝 / PayPal / 信用卡',
+    brands: '适合长期主力，中文用户多，教程多，线路成熟',
+    links: [{ text: '查看搬瓦工', url: 'https://zhujitanzhang.com/go/bandwagonhost/', solid: true }]
+  },
+  {
+    id: '3',
+    useCase: '预算够、追求线路质量',
+    advice: 'DMIT',
+    specs: '支付宝 / PayPal / 信用卡',
+    brands: '适合进阶用户，重点看高端优化线路',
+    links: [{ text: '查看 DMIT', url: 'https://zhujitanzhang.com/go/dmit/', solid: true }]
+  },
+  {
+    id: '4',
+    useCase: '只想便宜备用',
+    advice: 'RackNerd / CloudCone',
+    specs: '支付宝 / PayPal / 信用卡',
+    brands: '年付价格低，更适合备用节点',
+    links: [
+      { text: '查看 RackNerd', url: 'https://zhujitanzhang.com/go/racknerd/', solid: true },
+      { text: '查看 CloudCone', url: 'https://zhujitanzhang.com/go/cloudcone/' }
+    ]
+  },
+  {
+    id: '5',
+    useCase: '完全不想碰命令行',
+    advice: '先确认维护成本',
+    specs: '—',
+    brands: 'VPS 需要自己维护，先判断能否接受折腾成本',
+    links: []
+  }
+];
+
+const navItems = [
+  { label: '一、新手优先怎么选', href: '#overview' },
+  { label: '二、VPS 推荐清单', href: '#recommendations' },
+  { label: '三、线路与晚高峰', href: '#network' },
+  { label: '四、机房怎么选', href: '#locations' },
+  { label: '五、不同预算怎么选', href: '#budget' },
+  { label: '六、购买前检查', href: '#checklist' },
+  { label: '七、常见问题', href: '#faq' }
+];
+
+const productAttrs = {
+  target: '_blank',
+  rel: 'nofollow noopener noreferrer'
+};
+---
+
+<Layout title="搭梯子 VPS 推荐2026：新手怎么选稳定、便宜、适合自建的服务器？">
+  <Fragment slot="head">
+    <title>搭梯子 VPS 推荐2026：新手怎么选稳定、便宜、适合自建的服务器？</title>
+    <meta name="description" content="搭梯子 VPS 推荐2026：按试错、长期主力、低价备用和高端优化四种场景，对比 Vultr、搬瓦工、RackNerd、CloudCone 与 DMIT，并说明线路、机房、晚高峰和 IP 的选择方法。" />
+    <meta property="og:title" content="搭梯子 VPS 推荐2026：新手怎么选稳定、便宜、适合自建的服务器？" />
+    <meta property="og:description" content="第一次买搭梯子 VPS，先按试错、主力、备用、高端优化四种使用场景定方向。" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vps-recommend.github.io/vps-for-proxy/" />
+    <link rel="canonical" href="https://vps-recommend.github.io/vps-for-proxy/" />
+    <script type="application/ld+json" is:inline>
+      {JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': 'https://vps-recommend.github.io/vps-for-proxy/'
+        },
+        headline: '搭梯子 VPS 推荐2026：新手怎么选稳定、便宜、适合自建的服务器？',
+        description: '按试错、长期主力、低价备用和高端优化四种场景选择搭梯子 VPS。',
+        author: { '@type': 'Organization', name: 'VPS推荐' },
+        publisher: {
+          '@type': 'Organization',
+          name: 'VPS推荐',
+          logo: { '@type': 'ImageObject', url: 'https://vps-recommend.github.io/logo.png' }
+        },
+        datePublished: '2026-07-06T08:00:00+08:00',
+        dateModified: '2026-07-06T08:00:00+08:00'
+      })}
+    </script>
+  </Fragment>
+
+  <div class="vpsrec-wrap">
+    <section class="vpsrec-hero" id="top">
+      <div class="vpsrec-container vpsrec-hero-grid">
+        <div>
+          <div class="vpsrec-kicker">VPS 线路与机房选择指南</div>
+          <h1>搭梯子 VPS 推荐2026：新手怎么选稳定、便宜、适合自建的服务器？</h1>
+          <p>第一次买搭梯子 VPS，先按使用场景定方向：<strong>试错、主力、备用、高端优化</strong>。方向定好以后，选商家和机房会简单很多。</p>
+          <ul class="mt-5 space-y-2">
+            <li>第一台 VPS 可以从 <strong>Vultr</strong> 开始试错；</li>
+            <li>每天都要用，优先看 <strong>搬瓦工 CN2 GIA-E</strong>；</li>
+            <li>预算低，可以买 <strong>RackNerd</strong>、<strong>CloudCone</strong> 做备用；</li>
+            <li>已经懂线路、在意晚高峰和回程质量，再把 <strong>DMIT</strong> 放进对比清单。</li>
+          </ul>
+          <p class="mt-5"><strong>搭梯子 VPS 的体验差距，通常出现在 IP、线路、机房和晚上 9 点以后。</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <SideNav items={navItems} client:load />
+
+    <section class="vpsrec-section" id="overview">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Overview</span>
+          <h2>一、先给结论：搭梯子 VPS 新手优先这样选</h2>
+          <p>先看这张表。新手不用一上来研究所有套餐名，按自己的使用情况选方向更稳。</p>
+        </div>
+        <VpsTable data={vpsTableData} headers={['你的情况', '优先选择', '支付方式', '购买判断']} client:load />
+        <p class="mt-8">我的选择顺序很固定：第一次练手，用 Vultr；每天都要用，优先搬瓦工 CN2 GIA-E；预算低，RackNerd 或 CloudCone 放在备用位置；用过普通 VPS 后，再看 DMIT 这种更偏线路质量的选择。</p>
+        <div class="vpsrec-callout mt-8">
+          <strong>💡 避坑指南：</strong>很多人第一次踩坑，都是被低价年付吸引，买完才发现 IP 连不上、机房体验差、晚上速度掉得厉害。便宜 VPS 可以买，关键是把它放在合适的位置：<strong>备用、测试、练手</strong>。每天都要用的主力节点，优先把预算放在<strong>线路、机房和 IP 稳定性</strong>上。
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="recommendations">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Recommendations</span>
+          <h2>二、搭梯子 VPS 推荐清单：按稳定、试错、低价分开选</h2>
+        </div>
+        <div class="vpsrec-compare">
+          <article class="vpsrec-card">
+            <h3>1. 稳定主力：搬瓦工 BandwagonHost</h3>
+            <p>搬瓦工适合把 VPS 当<strong>长期主力</strong>用的人。它的价格比普通低价 VPS 高一些，但对国内用户来说，线路、机房、面板和教程资源都比较成熟，尤其是 <strong>CN2 GIA-E</strong> 这类套餐，重点价值在<strong>晚高峰更稳</strong>。</p>
+            <ul class="mt-4">
+              <li><strong>排查成本低：</strong>出了问题，你能找到大量中文教程，机房怎么选、套餐怎么换、KiwiVM 面板怎么操作，基本都有现成经验可参考。对新手来说，这比多给一点 CPU 或硬盘更实用。</li>
+              <li><strong>适用场景：</strong>如果你每天都要用，晚上要查资料、看视频、远程办公，预算又不想压得太死，搬瓦工比很多低价 VPS 更省心。</li>
+            </ul>
+            <p class="mt-4"><strong>买搬瓦工，本质上买的是线路、机房、中文生态和少折腾。</strong></p>
+            <div class="vpsrec-table-actions mt-6">
+              <a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/bandwagonhost/" {...productAttrs}>查看搬瓦工</a>
+            </div>
+          </article>
+
+          <article class="vpsrec-card">
+            <h3>2. 新手试错：Vultr</h3>
+            <p>Vultr 适合第一次买 VPS 的人，核心价值是<strong>试错成本低</strong>。你可以先开美西、日本、新加坡机房测试，发现 IP 不通或者速度不理想，直接 <code>Destroy</code> 销毁实例，再重新开一台。</p>
+            <ul class="mt-4">
+              <li><strong>新手操作顺序：</strong>先开机 ➔ 先测 IP ➔ 再部署环境。IP 能连通，再继续安装面板或协议；IP 连接不顺，直接销毁重建。这个顺序能省很多时间。</li>
+              <li><strong>IP 策略：</strong>Vultr 太热门，日本、新加坡、美西等机房都有机会开到不可用 IP。遇到这种情况，利用它按小时计费的特点，重新开机测试即可，每次试错成本通常只是几美分。</li>
+              <li><strong>账单细节：</strong>确认不用时一定要 <strong>Destroy 销毁实例</strong>。只关机通常还会继续计费，销毁实例以后，才算真正停止资源占用。</li>
+            </ul>
+            <p class="mt-4">Vultr 更像新手练手机、测试机。长期使用时，再结合线路质量和 IP 稳定性决定是否继续保留。</p>
+            <div class="vpsrec-table-actions mt-6">
+              <a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/vultr/" {...productAttrs}>查看 Vultr</a>
+            </div>
+          </article>
+
+          <article class="vpsrec-card">
+            <h3>3. 低价备用：RackNerd / CloudCone</h3>
+            <p>RackNerd 和 CloudCone 的优势很直接：<strong>价格低，付款方便</strong>。更合理的位置，是<strong>备用节点和练手机</strong>。</p>
+            <p class="mt-4">低价年付 VPS 的使用预期要放准：白天可能很顺，晚上速度也可能出现波动。偶尔用、备用用、练手用，它们很合适；每天都要依赖的主力节点，更适合选择线路更强、机房更灵活的方案。</p>
+            <p class="mt-4">买 RackNerd 或 CloudCone，重点看四件事：</p>
+            <ol class="mt-2 list-decimal pl-6 space-y-1">
+              <li>机房在哪里</li>
+              <li>月流量多少</li>
+              <li>带宽多大</li>
+              <li>续费价格是否还能接受</li>
+            </ol>
+            <p class="mt-4"><strong>低价机的核心价值在“便宜备用”，不是“长期主力”。</strong></p>
+            <div class="vpsrec-table-actions mt-6">
+              <a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/racknerd/" {...productAttrs}>查看 RackNerd</a>
+              <a class="vpsrec-btn vpsrec-btn-ghost" href="https://zhujitanzhang.com/go/cloudcone/" {...productAttrs}>查看 CloudCone</a>
+            </div>
+          </article>
+
+          <article class="vpsrec-card">
+            <h3>4. 高端优化：DMIT</h3>
+            <p>DMIT 更适合已经知道自己要什么的人。选 DMIT 的人，通常已经从“能连上”升级到“晚高峰能不能稳、回程质量怎么样、不同运营商体验差多少、长期使用会不会频繁折腾”。</p>
+            <p class="mt-4">它的重点是<strong>线路质量和高端优化网络</strong>。如果你已经用过普通 VPS，知道晚高峰、回程线路、IP 可用性这些问题有多烦，再看 DMIT 会更有感觉。</p>
+            <p class="mt-4">第一台 VPS 可以先从 Vultr 或搬瓦工开始；预算充足、对线路质量要求更高，再把 DMIT 放进对比清单。</p>
+            <div class="vpsrec-table-actions mt-6">
+              <a class="vpsrec-btn vpsrec-btn-primary" href="https://zhujitanzhang.com/go/dmit/" {...productAttrs}>查看 DMIT</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section" id="network">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Network</span>
+          <h2>三、选搭梯子 VPS，线路和晚高峰比配置更重要</h2>
+        </div>
+        <div class="vpsrec-card">
+          <h3>配置够用即可，重点看真实连接体验</h3>
+          <p>买搭梯子 VPS，配置够用就行。个人轻量使用，<strong>1 核 CPU、512MB 到 1GB 内存</strong>通常已经够用。硬盘大小也不是核心，除非你还要跑网站、存文件、做下载任务。</p>
+          <p class="mt-4">体验差距往往出现在晚上 9 点以后。普通线路容易拥堵，速度和丢包会明显变化。<strong>白天测速快，晚上未必一样快。</strong></p>
+          <div class="vpsrec-callout mt-6"><strong>建议：</strong>如果只是个人轻量使用，先从低配置开始测试即可；如果还要跑面板、多个协议、监控脚本，直接从 <strong>1GB 内存</strong>起步会更省心。</div>
+        </div>
+        <h3 class="text-xl font-bold mt-10 mb-4">线路名可以用大白话理解</h3>
+        <div class="vpsrec-table-wrap">
+          <table class="vpsrec-table w-full">
+            <thead><tr><th>线路类型</th><th>大白话解释</th><th>适合谁</th></tr></thead>
+            <tbody>
+              <tr><td><strong>CN2 GIA / CN2 GIA-E</strong></td><td>晚高峰的公交专用道，别人堵的时候它更有机会保持稳定</td><td>电信用户、长期主力用户</td></tr>
+              <tr><td><strong>AS9929</strong></td><td>联通用户常关注的优化线路</td><td>联通用户、进阶用户</td></tr>
+              <tr><td><strong>CMI</strong></td><td>移动用户可以重点测试的线路</td><td>移动用户</td></tr>
+              <tr><td><strong>普通 BGP</strong></td><td>白天可能很顺，晚上容易堵</td><td>低价备用、轻度使用</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-6">新手一开始不用研究得太深。先记住一个判断：<strong>优化线路贵一些，买的是晚高峰稳定性；普通便宜线路更适合备用，波动也更容易出现。</strong></p>
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="locations">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Locations</span>
+          <h2>四、机房怎么选：美西直连优先于亚太绕路</h2>
+          <p>新手很容易误判机房：觉得香港、日本离得近，所以体验一定更好。实际体验要看<strong>线路架构</strong>。没有优化线路的亚太机房，可能绕路、拥堵、晚高峰掉速；优化好的美西线路，反而更适合作为长期主力。</p>
+        </div>
+        <div class="vpsrec-callout mb-8"><strong>选机房记住一句话：美西直连优先于亚太绕路。</strong></div>
+        <div class="vpsrec-grid-3">
+          <div class="vpsrec-card">
+            <h3>美西 VPS：新手第一测试方向</h3>
+            <p>美西是搭梯子 VPS 里最常见的选择，尤其是洛杉矶方向。商家多、教程多、套餐多。如果是 <strong>CN2 GIA、CN2 GIA-E、AS9929</strong>，美西比普通亚太机房更值得优先测试。新手第一次买，美西通常是最稳的起点。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>日本 VPS：延迟好看，但要看线路</h3>
+            <p>日本 VPS 的 ping 数字经常很好看，但延迟好看只是第一步。重点看<strong>晚高峰视频、SSH 稳定性</strong>和连续使用半小时后的掉速情况。Vultr 日本机房开机后先测 IP 可用性，再决定是否保留。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>香港 VPS：速度潜力高，但价格高</h3>
+            <p>距离近，速度潜力高，但价格和带宽成本也高。预算充足、追求低延迟，重点看香港优化线路。价格特别低的香港机，重点检查带宽、流量和线路体验。</p>
+          </div>
+          <div class="vpsrec-card">
+            <h3>新加坡 VPS：可以测试，但要看晚高峰</h3>
+            <p>对移动用户、东南亚访问有一定价值，但最终看具体线路。测试时，同样要看晚高峰、连续连接稳定性和 IP 可用性。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section" id="budget">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Budget</span>
+          <h2>五、不同预算怎么选搭梯子 VPS？</h2>
+          <p>预算低可以买 VPS，但位置要放对。<strong>低价机负责备用和练手，主力节点负责每天稳定使用。</strong>真正长期使用，预算优先给线路和机房，而不是给更大的硬盘和更高的 CPU。</p>
+        </div>
+        <div class="vpsrec-table-wrap">
+          <table class="vpsrec-table w-full">
+            <thead><tr><th>预算情况</th><th>推荐选择</th><th>判断</th></tr></thead>
+            <tbody>
+              <tr><td><strong>极低预算</strong></td><td><strong>RackNerd / CloudCone</strong></td><td>更适合备用和练手</td></tr>
+              <tr><td><strong>新手测试</strong></td><td><strong>Vultr</strong></td><td>先测试 IP、机房和流程</td></tr>
+              <tr><td><strong>长期稳定</strong></td><td><strong>搬瓦工 CN2 GIA-E</strong></td><td>每天使用更稳妥</td></tr>
+              <tr><td><strong>高端预算</strong></td><td><strong>DMIT / 搬瓦工香港、日本</strong></td><td>追求极致线路质量</td></tr>
+              <tr><td><strong>不想折腾</strong></td><td><strong>先确认维护成本</strong></td><td>VPS 后期需要自己处理系统、IP 和线路问题</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-6"><strong>落单前先问自己：这台 VPS 是备用，还是每天都要用？</strong> 主力优先线路和晚高峰；备用看重价格和流量。</p>
+      </div>
+    </section>
+
+    <section class="vpsrec-section vpsrec-section-light" id="checklist">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">Checklist</span>
+          <h2>六、买 VPS 前最后检查：支付方式、换 IP、换机房都要看</h2>
+        </div>
+        <div class="vpsrec-grid-3">
+          <div class="vpsrec-card"><h3>1. 支付方式</h3><p>国内用户买 VPS，支付方式是硬门槛。RackNerd、CloudCone、Vultr、搬瓦工和 DMIT 均支持支付宝，上手门槛更低。</p></div>
+          <div class="vpsrec-card"><h3>2. 是否支持换 IP</h3><p>IP 不可用是最常见的麻烦。Vultr 可以靠 Destroy 重建反复拿新 IP；长期主力 VPS，优先选面板成熟、机房选择多、出现问题有补救空间的商家。<strong>能换、能迁移、能重建，比便宜几美元更重要。</strong></p></div>
+          <div class="vpsrec-card"><h3>3. 是否支持换机房</h3><p>机房买错比配置买低更麻烦。线路绕路、晚高峰丢包，很多时候只能迁移或重买。能换机房的商家，对新手更友好。</p></div>
+          <div class="vpsrec-card"><h3>4. 是否支持月付或小时计费</h3><p>第一次买，<strong>先用月付或小时计费测试</strong>。确认 IP、线路、机房都能接受，再考虑长期的年付套餐，降低试错成本。</p></div>
+          <div class="vpsrec-card"><h3>5. 流量和带宽是否够用</h3><p>个人轻量使用普通套餐就够；多人共用、视频较多、长期在线，流量不够会比 CPU 不够更让人头疼。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vpsrec-section" id="faq">
+      <div class="vpsrec-container">
+        <div class="vpsrec-section-title">
+          <span class="vpsrec-label">FAQ</span>
+          <h2>七、搭梯子 VPS 常见问题：买前最后确认</h2>
+        </div>
+        <div class="vpsrec-faq">
+          <details open><summary>搭梯子 VPS 需要多大配置？</summary><p>个人轻量使用，<strong>512MB 可以起步，1GB 更稳</strong>。如果要跑面板、监控脚本，直接 1GB 起步。重点看线路、流量、带宽和 IP 可用性。</p></details>
+          <details><summary>搭梯子 VPS 选 Debian 还是 Ubuntu？</summary><p>新手<strong>优先 Debian 或 Ubuntu</strong>。教程多、兼容性好，出问题更容易找到解决方案。第一台 VPS 用主流系统更省心。</p></details>
+          <details><summary>香港 VPS 一定比美国 VPS 快吗？</summary><p><strong>不一定。</strong>实际体验取决于线路架构和是否绕路。香港距离近但带宽贵；如果线路普通或绕路，体验可能不如美西 CN2 GIA。<strong>选机房看线路架构，比看地图距离更靠谱。</strong></p></details>
+          <details><summary>VPS IP 不可用了怎么办？</summary><p>先测试连通性。按小时计费的 VPS 可以销毁后重新开机；长期主力优先选择支持换 IP、换机房的商家。IP 风险提前考虑，后面会少很多折腾。</p></details>
+        </div>
+        <div class="vpsrec-callout mt-10">
+          <strong>📝 最终总结：</strong>第一次试错选 <strong>Vultr</strong>，长期主力看 <strong>搬瓦工 CN2 GIA-E</strong>，低价备用看 <strong>RackNerd / CloudCone</strong>，追求线路质量再看 <strong>DMIT</strong>。配置够用就行，<strong>线路、支付方式、晚高峰、IP 可用性和能否换机房</strong>，才是搭梯子 VPS 的核心。
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
