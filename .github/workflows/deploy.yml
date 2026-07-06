@@ -4,18 +4,21 @@ on:
   push:
     branches:
       - main
-
+      - master
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -23,16 +26,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.12.0
+          node-version: '20'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci || npm install
 
       - name: Build Project
         run: npm run build
 
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          path: ./dist
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
